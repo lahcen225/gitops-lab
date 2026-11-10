@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: shop
+  namespace: argocd
+spec:
+  description: The shop application
+  sourceRepos:
+  - https://github.com/lahcen225/gitops-lab.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: shop-*
+  clusterResourceWhitelist:
+  - group: ""
+    kind: Namespace

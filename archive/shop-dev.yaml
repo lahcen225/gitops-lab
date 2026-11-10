@@ -4,7 +4,7 @@ metadata:
   name: shop-dev
   namespace: argocd
 spec:
-  project: default
+  project: shop
   source:
     repoURL: https://github.com/lahcen225/gitops-lab.git
     targetRevision: main

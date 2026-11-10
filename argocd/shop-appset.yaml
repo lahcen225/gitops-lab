@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: shop
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: https://github.com/lahcen225/gitops-lab.git
+      revision: main
+      directories:
+      - path: deploy/overlays/*
+  template:
+    metadata:
+      name: 'shop-{{.path.basename}}'
+    spec:
+      project: shop
+      source:
+        repoURL: https://github.com/lahcen225/gitops-lab.git
+        targetRevision: main
+        path: '{{.path.path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'shop-{{.path.basename}}'
+  templatePatch: |
+    {{- if ne .path.basename "prod" }}
+    spec:
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+    {{- end }}
