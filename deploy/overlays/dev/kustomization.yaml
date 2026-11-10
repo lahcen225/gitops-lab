@@ -15,7 +15,7 @@ configMapGenerator:
 - name: web-config
   behavior: merge
   literals:
-  - PODINFO_UI_MESSAGE=Hello from dev
+  - PODINFO_UI_MESSAGE=Hello again from dev
 
 patches:
 - target:
